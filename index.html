@@ -12,17 +12,17 @@
   <div>Errors: <span id=errors>0</span>/5</div>
 </div><hr>
 
-<!--paraula-->
 <div>
+  <!--mostrar definició-->
   <div id=paraula paraula="" style="margin:10px 0px;font-size:20px;font-style:italic"></div>
+  <!--input resposta + botó submit-->
   <div class=flex style=justify-content:center>
     <input id=resposta type=text placeholder="Escriu la paraula" onkeypress="if(event.which==13)get_resposta()">
     <button id=submit onclick=get_resposta()>ok</button>
   </div>
+  <!--pista per quan falles-->
+  <div id=pista></div>
 </div>
-
-<!--pista per quan falles-->
-<div id=pista></div>
 
 <!--footer-->
 <div id=sponsors>
@@ -33,11 +33,9 @@
   <div><a href="//github.com/holalluis/lappscriptor/blob/master/README.md">Sobre l'appscriptor</a></div>
 </div>
 
-
 <!--carrega backend--><script src=app.js></script>
 
-<!--frontend-->
-<script>
+<!--frontend--><script>
   //DOM
   let div_paraula  = document.querySelector('#paraula');  //definició
   let div_punts    = document.querySelector('#punts');    //comptador punts
@@ -90,12 +88,6 @@
       div_paraula.style.color='red';
       div_errors.innerHTML=errors;
 
-      //game over
-      if(errors==6){
-        alert("Game Over! Torna-ho a intentar!");
-        window.location.reload();
-      }
-
       //dibuixa pista (marca en verd les lletres correctes)
       for(let i=0;i<p.length;i++){
         let c_1 = p[i];        //caràcter correcte
@@ -105,6 +97,12 @@
         }else{
           div_pista.innerHTML+=`<span style=color:red>${c_2}</span>`;
         }
+      }
+
+      //game over
+      if(errors==6){
+        alert("Game Over! Torna-ho a intentar!");
+        window.location.reload();
       }
 
       //reselecciona text per seguir responent
