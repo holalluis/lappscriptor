@@ -1,0 +1,110 @@
+<!doctype html><html><head>
+  <meta charset=utf8>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel=stylesheet href=css.css>
+  <title>l'appscriptor</title>
+</head><body onload=dibuixa_paraula()><main>
+<h2 style=text-align:center>l'appscriptor</h2><hr>
+
+<!--punts i errors-->
+<div class=flex style=justify-content:space-between>
+  <div>Punts: <span id=punts>0</span></div>
+  <div>Errors: <span id=errors>0</span>/5</div>
+</div><hr>
+
+<!--paraula-->
+<div>
+  <div id=paraula paraula="" style="margin:10px 0px;font-size:20px;font-style:italic"></div>
+  <div class=flex style=justify-content:center>
+    <input id=resposta type=text placeholder="Escriu la paraula" onkeypress="if(event.which==13)get_resposta()">
+    <button id=submit onclick=get_resposta()>ok</button>
+  </div>
+</div>
+
+<!--pista per quan falles-->
+<div id=pista></div>
+
+<!--sponsors-->
+<div id=sponsors>
+  Col·labora:<br>
+  <img src="http://www.fedac.cat/images/logos/salt.png" width="30%">
+</div>
+
+<!--carrega backend--><script src=app.js></script>
+
+<!--frontend-->
+<script>
+  //DOM
+  let div_paraula  = document.querySelector('#paraula');  //definició
+  let div_punts    = document.querySelector('#punts');    //comptador punts
+  let div_errors   = document.querySelector('#errors');   //comptador errors
+  let div_resposta = document.querySelector('#resposta'); //input respondre
+  let btn_submit   = document.querySelector('#submit');   //botó submit resposta
+  let div_pista    = document.querySelector('#pista');    //div pista per quan falles
+
+  //agafa una paraula i dibuixa-la al frontend
+  function dibuixa_paraula(){
+    let p=get_paraula();
+    if(!p){
+      div_paraula.innerHTML="<span style='color:#af0'>Ja has acabat, bona feina!</span>";
+      div_resposta.style.display='none';
+      btn_submit.style.display='none';
+      return;
+    }
+    //set input maxlength a length paraula correcta
+    div_resposta.setAttribute('maxlength',p[0].length);
+    //escriu definició i length de la paraula correcta
+    div_paraula.innerHTML=`"${p[1]}" (${p[0].length})`;
+    //posa la paraula correcta com a atribut del div_paraula
+    div_paraula.setAttribute('paraula',p[0]);
+    //enfoca el div_resposta
+    div_resposta.focus();
+  }
+
+  //llegeix la resposta de l'usuari i comprova si és correcte
+  function get_resposta(){
+    let r = div_resposta.value; //resposta de l'usuari
+    if(r=="") return;           //si respon en blanc no facis res
+
+    //obtenir resposta correcta
+    let p = div_paraula.getAttribute('paraula');
+
+    //esborra pista anterior si n'hi ha
+    div_pista.innerHTML="";
+
+    //comprova solució (r==p)
+    if(r.toUpperCase()==p.toUpperCase()){
+      snd_ok.play();
+      punts++;
+      div_punts.innerHTML=punts;
+      div_resposta.value="";
+      dibuixa_paraula();
+      div_paraula.style.color='';
+    }else{
+      snd_fail.play();
+      errors++;
+      div_paraula.style.color='red';
+      div_errors.innerHTML=errors;
+
+      //game over
+      if(errors==6){
+        alert("Game Over! Torna-ho a intentar!");
+        window.location.reload();
+      }
+
+      //dibuixa pista (marca en verd les lletres correctes)
+      for(let i=0;i<p.length;i++){
+        let c_1 = p[i];        //caràcter correcte
+        let c_2 = r[i] || "_"; //caràcter respost, o guió baix si no existeix
+        if(c_1.toUpperCase()==c_2.toUpperCase()){
+          div_pista.innerHTML+=`<span style=color:#af0>${c_1}</span>`;
+        }else{
+          div_pista.innerHTML+=`<span style=color:red>${c_2}</span>`;
+        }
+      }
+
+      //reselecciona text per seguir responent
+      div_resposta.select();
+    }
+  }
+</script>

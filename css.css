@@ -1,0 +1,56 @@
+body{
+  color: #5C5C5C;
+  background:#fafafa;
+  overflow-y:scroll;
+  font-family: Charter, serif;
+  font-family: Roboto Slab, Roboto, Calibri, Corbel, sans-serif;
+}
+
+/*
+  58 bytes of css to look great nearly everywhere
+  https://jrl.ninja/etc/1/
+*/
+main{
+  max-width:80ch;
+  padding:1rem;
+  margin:auto;
+}
+
+hr{
+  border:none;
+  border-bottom:1px solid #ccc;
+}
+
+h1,h2,h3{
+  margin:5px auto;
+}
+
+.flex {
+  display:flex;
+  flex-wrap:wrap;
+}
+
+/*DOM*/
+input#resposta {
+  font-size:larger;
+  display:block;
+}
+#paraula {
+  text-align:center;
+}
+#resposta {
+  outline:none;
+}
+#submit {
+  display:block;
+  border:1px solid #ccc;
+}
+#pista{
+  text-align:center;
+  font-size:larger;
+}
+#sponsors{
+  font-size:smaller;
+  text-align:center;
+  margin-top:200px;
+}
