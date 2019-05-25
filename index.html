@@ -12,9 +12,17 @@
   <div>Errors: <span id=errors>0</span>/5</div>
 </div><hr>
 
+<!--main div-->
 <div>
-  <!--mostrar definició-->
-  <div id=paraula paraula="" style="margin:10px 0px;font-size:20px;font-style:italic"></div>
+  <div class=flex style="justify-content:center;margin:10px 0px;font-size:20px;font-style:italic">
+    <!--definició-->
+    <div id=paraula paraula="">carregant...</div>
+    <!--lletres escrites/totals-->
+    <div class=flex style=font-family:monospace id=container_lletres>
+      &nbsp;(<div id=lletres_escrites>0</div>/
+      <div id=lletres_totals>0</div>)
+    </div>
+  </div>
   <!--input resposta + botó submit-->
   <div class=flex style=justify-content:center>
     <input id=resposta type=text placeholder="Escriu la paraula" onkeypress="if(event.which==13)get_resposta()">
@@ -28,21 +36,28 @@
 <div id=sponsors>
   Col·labora:<br>
   <!--fedac logo-->
-  <img src="http://www.fedac.cat/images/logos/salt.png" width="30%">
+  <img src="img/salt.png" width="30%">
   <!--link a github-->
   <div><a href="//github.com/holalluis/lappscriptor/blob/master/README.md">Sobre l'appscriptor</a></div>
 </div>
 
 <!--carrega backend--><script src=app.js></script>
 
-<!--frontend--><script>
+<!--frontend-->
+<script>
   //DOM
-  let div_paraula  = document.querySelector('#paraula');  //definició
-  let div_punts    = document.querySelector('#punts');    //comptador punts
-  let div_errors   = document.querySelector('#errors');   //comptador errors
-  let div_resposta = document.querySelector('#resposta'); //input respondre
-  let btn_submit   = document.querySelector('#submit');   //botó submit resposta
-  let div_pista    = document.querySelector('#pista');    //div pista per quan falles
+  let btn_submit            = document.querySelector('#submit');            //botó submit resposta
+  let div_errors            = document.querySelector('#errors');            //comptador errors
+  let div_paraula           = document.querySelector('#paraula');           //definició
+  let div_pista             = document.querySelector('#pista');             //div pista per quan falles
+  let div_punts             = document.querySelector('#punts');             //comptador punts
+  let div_resposta          = document.querySelector('#resposta');          //input respondre
+  let div_container_lletres = document.querySelector('#container_lletres'); //container escrites/totals
+  let div_lletres_escrites  = document.querySelector('#lletres_escrites');  //comptador lletres escrites
+  let div_lletres_totals    = document.querySelector('#lletres_totals');    //comptador lletres totals
+
+  //onkeypress listener escriu nombre de lletres escrites
+  div_resposta.addEventListener('keyup',function(){ div_lletres_escrites.innerHTML=this.value.length; });
 
   //agafa una paraula i dibuixa-la al frontend
   function dibuixa_paraula(){
@@ -50,13 +65,15 @@
     if(!p){
       div_paraula.innerHTML="<span style='color:#af0'>Ja has acabat, bona feina!</span>";
       div_resposta.style.display='none';
+      div_container_lletres.style.display='none';
       btn_submit.style.display='none';
       return;
     }
     //set input maxlength a length paraula correcta
     div_resposta.setAttribute('maxlength',p[0].length);
     //escriu definició i length de la paraula correcta
-    div_paraula.innerHTML=`"${p[1]}" (${p[0].length})`;
+    div_paraula.innerHTML=`"${p[1]}"`;
+    div_lletres_totals.innerHTML=p[0].length;
     //posa la paraula correcta com a atribut del div_paraula
     div_paraula.setAttribute('paraula',p[0]);
     //enfoca el div_resposta
@@ -82,6 +99,7 @@
       div_resposta.value="";
       dibuixa_paraula();
       div_paraula.style.color='';
+      div_lletres_escrites.innerHTML="0";
     }else{
       snd_fail.play();
       errors++;
