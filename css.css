@@ -40,9 +40,11 @@ input#resposta {
 }
 #resposta {
   outline:none;
+  text-align:center;
 }
 #submit {
   display:block;
+  display:none;
   border:1px solid #ccc;
 }
 #pista{

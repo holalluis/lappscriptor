@@ -17,20 +17,21 @@
   <div class=flex style="justify-content:center;margin:10px 0px;font-size:20px;font-style:italic">
     <!--definició-->
     <div id=paraula paraula="">carregant...</div>
-    <!--lletres escrites/totals-->
-    <div class=flex style=font-family:monospace id=container_lletres>
-      &nbsp;(<div id=lletres_escrites>0</div>/
-      <div id=lletres_totals>0</div>)
-    </div>
   </div>
-  <!--input resposta + botó submit-->
+  <!--resposta-->
   <div class=flex style=justify-content:center>
     <input id=resposta type=text placeholder="Escriu la paraula" onkeypress="if(event.which==13)get_resposta()">
     <button id=submit onclick=get_resposta()>ok</button>
   </div>
-  <!--pista per quan falles-->
-  <div id=pista></div>
-</div>
+
+  <!--comptador lletres-->
+  <div id=container_lletres style="margin-top:5px;font-family:monospace;text-align:center">
+    (<span id=lletres_escrites>0</span>/<span id=lletres_totals>0</span>)
+  </div>
+
+  <!--pista per quan falles--><div id=pista></div>
+</div><hr>
+
 
 <!--footer-->
 <div id=sponsors>
@@ -63,7 +64,7 @@
   function dibuixa_paraula(){
     let p=get_paraula();
     if(!p){
-      div_paraula.innerHTML="<span style='color:#af0'>Ja has acabat, bona feina!</span>";
+      div_paraula.innerHTML="<span style='color:green'>Ja has acabat, bona feina!</span>";
       div_resposta.style.display='none';
       div_container_lletres.style.display='none';
       btn_submit.style.display='none';
@@ -111,7 +112,7 @@
         let c_1 = p[i];        //caràcter correcte
         let c_2 = r[i] || "_"; //caràcter respost, o guió baix si no existeix
         if(c_1.toUpperCase()==c_2.toUpperCase()){
-          div_pista.innerHTML+=`<span style=color:#af0>${c_1}</span>`;
+          div_pista.innerHTML+=`<span style=color:green>${c_1}</span>`;
         }else{
           div_pista.innerHTML+=`<span style=color:red>${c_2}</span>`;
         }
