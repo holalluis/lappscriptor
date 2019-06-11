@@ -13,7 +13,7 @@ let Paraules={
   "diccionari"   :"Obra que recull els mots d’una llengua, els termes d’una ciència, d’un art, d’una activitat, etc., amb llur significació, disposats en un ordre determinat, normalment alfabètic, que pot contenir d’altres informacions de naturalesa gramatical, fonètica, etc.",
   "persuadir"    :"Induir a creure, a fer, alguna cosa, convèncer",
   "adéu"         :"Ho diem per despedir-nos d'algú",
-  "ampli"        :"Amb molta extensió o espai",
+  "ample"        :"Amb molta extensió o espai",
   "atzucac"      :"Carrer sense sortida",
   "botiguer"     :"Persona que treballa en una botiga",
   "brillant"     :"Que brilla",
